@@ -249,7 +249,7 @@ export default function App() {
   const niche = creator.fields["Niche"] || "";
   const activeCount = orders.filter(o=>["Invited","Accepted"].includes(o.fields.Status)).length;
   const totalEarned = orders.filter(o=>o.fields.Status==="Paid").reduce((s,o)=>s+(o.fields["Total Price"]||0),0);
-  const pendingPay = orders.filter(o=>o.fields.["Posted","Verified"].includes(o.fields.Status)).reduce((s,o)=>s+(o.fields["Total Price"]||0),0);
+  const pendingPay = orders.filter(o=>["Posted","Verified"].includes(o.fields.Status)).reduce((s,o)=>s+(o.fields["Total Price"]||0),0);
 
   const filters = [
     {key:"all",label:"All",count:orders.length},
