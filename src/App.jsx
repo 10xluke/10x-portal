@@ -17,8 +17,9 @@ async function getCreatorByEmail(email) {
   return data.records[0] || null;
 }
 
-async function getOrdersForCreator(creatorId) {
-  const data = await airtableFetch(`/Orders?filterByFormula=FIND("${creatorId}",ARRAYJOIN({Creator}))&sort[0][field]=DM+Sent+Date&sort[0][direction]=desc`);
+async function getOrdersForCreator(email) {
+  const formula = encodeURIComponent(`FIND("${email.toLowerCase()}", ARRAYJOIN({Creator Email}))`);
+  const data = await airtableFetch(`/Orders?filterByFormula=${formula}&sort[0][field]=DM+Sent+Date&sort[0][direction]=desc`);
   return data.records;
 }
 
@@ -234,7 +235,7 @@ export default function App() {
     setLoading(true);
     setCreator(creatorRecord);
     setUserEmail(email);
-    const records = await getOrdersForCreator(creatorRecord.id);
+    const records = await getOrdersForCreator(email);
     setOrders(records);
     setLoading(false);
   };
