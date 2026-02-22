@@ -171,7 +171,7 @@ const OrderCard = ({ record, onUpdate, expanded, onToggle }) => {
           </div>}
 
           <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:12, marginBottom:20 }}>
-            {soundLink && <Box label="Sound Link"><div>{soundCover && <img src={soundCover} style={{ width:60, height:60, borderRadius:8, objectFit:"cover", marginBottom:8, display:"block" }} />}<a href={soundLink} target="_blank" rel="noreferrer" style={{ color:"#FF6B00", textDecoration:"none", wordBreak:"break-all" }}>{soundLink}</a></div></Box>}
+            {soundLink && <Box label="Sound Link"><a href={soundLink} target="_blank" rel="noreferrer" style={{ color:"#FF6B00", textDecoration:"none", wordBreak:"break-all" }}>{soundLink}</a></Box>}
             <Box label="Deadline" style={isExpired?{borderColor:"rgba(239,68,68,0.3)"}:{}}><span style={{ color:isExpired?"#EF4444":"#fff" }}>{deadline ? new Date(deadline).toLocaleDateString() : "—"}{isExpired?" ⚠️":""}</span></Box>
             <Box label="Posts Required">{assignedPosts}</Box>
             <Box label="Payment"><span style={{ color:"#10B981", fontWeight:600 }}>${totalPrice}</span></Box>
