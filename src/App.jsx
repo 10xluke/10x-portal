@@ -226,9 +226,22 @@ export default function App() {
   const [creator, setCreator] = useState(null);
   const [userEmail, setUserEmail] = useState("");
   const [orders, setOrders] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [expanded, setExpanded] = useState(null);
   const [filter, setFilter] = useState("all");
+
+  useState(() => {
+  const saved = localStorage.getItem("10x_email");
+  if (saved) {
+    getCreatorByEmail(saved).then(c => {
+      if (c) {
+        setCreator(c);
+        setUserEmail(saved);
+        getOrdersForCreator(saved).then(r => { setOrders(r); setLoading(false); });
+      } else { localStorage.removeItem("10x_email"); setLoading(false); }
+    });
+  } else { setLoading(false); }
+}, []);
 
   const handleLogin = async (creatorRecord, email) => {
     setLoading(true);
@@ -236,6 +249,7 @@ export default function App() {
     setUserEmail(email);
     const records = await getOrdersForCreator(email);
     setOrders(records);
+    localStorage.setItem("10x_email", email);
     setLoading(false);
   };
 
@@ -276,7 +290,7 @@ export default function App() {
             <div style={{ fontSize:14, fontWeight:500 }}>{name}</div>
             {niche && <div style={{ fontSize:12, color:"rgba(255,255,255,0.35)" }}>{niche}</div>}
           </div>
-          <div style={{ width:38, height:38, borderRadius:10, background:"linear-gradient(135deg,#FF6B00,#FF8C00)", display:"flex", alignItems:"center", justifyContent:"center", fontSize:16, fontWeight:700 }}>{name[0]?.toUpperCase()}</div>
+          <div style={{ width:38, height:38, borderRadius:10, background:"linear-gradient(135deg,#FF6B00,#FF8C00)", display:"flex", alignItems:"center", justifyContent:"center", fontSize:16, fontWeight:700 }}>{name[0]?.toUpperCase()}</div><button onClick={() => { localStorage.removeItem("10x_email"); setCreator(null); }} style={{ background:"none", border:"none", color:"rgba(255,255,255,0.35)", fontSize:12, cursor:"pointer", fontFamily:font }}>Logout</button>
         </div>
       </header>
 
