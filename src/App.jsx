@@ -328,6 +328,7 @@ export default function App() {
             {filtered.length===0 && <div style={{ textAlign:"center", padding:48, color:"rgba(255,255,255,0.25)", fontSize:14 }}>No campaigns found</div>}
           </div>
         )}
+        <div style={{ textAlign:"center", padding:"32px 0 16px", color:"rgba(255,255,255,0.25)", fontSize:13 }}>Need help? DM us on <a href="https://instagram.com/10xprojects" target="_blank" rel="noreferrer" style={{ color:"#FF6B00", textDecoration:"none" }}>Instagram</a> or email <a href="mailto:support@10xprojects.co" style={{ color:"#FF6B00", textDecoration:"none" }}>support@10xprojects.co</a></div>
       </div>
     </div>
   );
