@@ -107,6 +107,7 @@ const OrderCard = ({ record, onUpdate, expanded, onToggle }) => {
   const campaign = Array.isArray(f["Campaign Name Lookup"]) ? f["Campaign Name Lookup"][0] : f["Campaign Name Lookup"] || "—";
   const songName = Array.isArray(f["Song Name Lookup"]) ? f["Song Name Lookup"][0] : f["Song Name Lookup"] || "";
   const soundLink = Array.isArray(f["Sound Link Lookup"]) ? f["Sound Link Lookup"][0] : f["Sound Link Lookup"] || "";
+  const soundCover = Array.isArray(f["Sound Cover Lookup"]) && f["Sound Cover Lookup"][0] ? f["Sound Cover Lookup"][0].url : "";
   const brief = Array.isArray(f["Brief Lookup"]) ? f["Brief Lookup"][0] : f["Brief Lookup"] || "";
   const assignedPosts = f["Assigned Posts"] || 1;
   const totalPrice = f["Total Price"] || 0;
@@ -114,15 +115,6 @@ const OrderCard = ({ record, onUpdate, expanded, onToggle }) => {
   const paymentStatus = f["Payment Status"] || "";
   const existingLinks = f["Video Links"] || "";
   const existingPaypal = f["PayPal/Crypto"] || "";
-
-  const [soundThumb, setSoundThumb] = useState("");
-useState(() => {
-  if (!soundLink) return;
-  fetch(`https://www.tiktok.com/oembed?url=${encodeURIComponent(soundLink)}`)
-    .then(r => r.json())
-    .then(d => { if (d.thumbnail_url) setSoundThumb(d.thumbnail_url); })
-    .catch(() => {});
-}, []);
 
   const [videoLinks, setVideoLinks] = useState(existingLinks ? existingLinks.split("\n").filter(Boolean) : Array(assignedPosts).fill(""));
   const [paypal, setPaypal] = useState(existingPaypal);
@@ -179,7 +171,7 @@ useState(() => {
           </div>}
 
           <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:12, marginBottom:20 }}>
-            {soundLink && <Box label="Sound Link"><div>{soundThumb && <img src={soundThumb} style={{ width:60, height:60, borderRadius:8, objectFit:"cover", marginBottom:8, display:"block" }} />}<a href={soundLink} target="_blank" rel="noreferrer" style={{ color:"#FF6B00", textDecoration:"none", wordBreak:"break-all" }}>{soundLink}</a></div></Box>}
+            {soundLink && <Box label="Sound Link"><div>{soundCover && <img src={soundCover} style={{ width:60, height:60, borderRadius:8, objectFit:"cover", marginBottom:8, display:"block" }} />}<a href={soundLink} target="_blank" rel="noreferrer" style={{ color:"#FF6B00", textDecoration:"none", wordBreak:"break-all" }}>{soundLink}</a></div></Box>}
             <Box label="Deadline" style={isExpired?{borderColor:"rgba(239,68,68,0.3)"}:{}}><span style={{ color:isExpired?"#EF4444":"#fff" }}>{deadline ? new Date(deadline).toLocaleDateString() : "—"}{isExpired?" ⚠️":""}</span></Box>
             <Box label="Posts Required">{assignedPosts}</Box>
             <Box label="Payment"><span style={{ color:"#10B981", fontWeight:600 }}>${totalPrice}</span></Box>
