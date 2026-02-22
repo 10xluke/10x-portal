@@ -35,6 +35,7 @@ const statusConfig = {
   Posted:   { color:"#8B5CF6", bg:"rgba(139,92,246,0.12)",  border:"rgba(139,92,246,0.25)",  icon:"📹", label:"Submitted" },
   Paid:     { color:"#10B981", bg:"rgba(16,185,129,0.12)",  border:"rgba(16,185,129,0.25)",  icon:"💰", label:"Paid" },
   Declined: { color:"#EF4444", bg:"rgba(239,68,68,0.12)",   border:"rgba(239,68,68,0.25)",   icon:"✖",  label:"Declined" },
+  Verified: { color:"#8B5CF6", bg:"rgba(139,92,246,0.12)", border:"rgba(139,92,246,0.25)", icon:"📹", label:"Submitted" },
 };
 const font = "'Outfit', sans-serif";
 
@@ -103,7 +104,7 @@ const OrderCard = ({ record, onUpdate, expanded, onToggle }) => {
   const status = f.Status || "Invited";
   const c = statusConfig[status] || statusConfig.Invited;
   const deadline = Array.isArray(f["Deadline Lookup"]) ? f["Deadline Lookup"][0] : f["Deadline Lookup"] || "";
-  const isExpired = deadline && new Date(deadline) < new Date() && !["Posted","Paid"].includes(status);
+  const isExpired = deadline && new Date(deadline) < new Date() && !["Posted","Paid","Verified","Verified","Verified"].includes(status);
   const daysLeft = deadline ? Math.ceil((new Date(deadline)-new Date())/86400000) : null;
   const campaign = Array.isArray(f["Campaign Name Lookup"]) ? f["Campaign Name Lookup"][0] : f["Campaign Name Lookup"] || "—";
   const songName = Array.isArray(f["Song Name Lookup"]) ? f["Song Name Lookup"][0] : f["Song Name Lookup"] || "";
@@ -154,7 +155,7 @@ const OrderCard = ({ record, onUpdate, expanded, onToggle }) => {
               {songName && <span style={{ color:"rgba(255,255,255,0.35)", fontSize:13 }}>🎵 {songName}</span>}
               <span style={{ color:"rgba(255,255,255,0.35)", fontSize:13 }}>📹 {assignedPosts} post{assignedPosts>1?"s":""}</span>
               <span style={{ color:"rgba(255,255,255,0.35)", fontSize:13 }}>💵 ${totalPrice}</span>
-              {!["Paid","Declined"].includes(status) && daysLeft!==null && (
+              {!["Paid","Declined","Verified","Verified","Verified","Verified"].includes(status) && daysLeft!==null && (
                 <span style={{ color:isExpired?"#EF4444":daysLeft<=3?"#F59E0B":"rgba(255,255,255,0.35)", fontSize:13, fontWeight:isExpired||daysLeft<=3?"600":"400" }}>⏰ {isExpired?"Expired":`${daysLeft}d left`}</span>
               )}
             </div>
@@ -198,7 +199,7 @@ const OrderCard = ({ record, onUpdate, expanded, onToggle }) => {
             </div>
           )}
 
-          {["Posted","Paid"].includes(status) && existingLinks && (
+          {["Posted","Paid","Verified","Verified"].includes(status) && existingLinks && (
             <div>
               <div style={{ color:"rgba(255,255,255,0.4)", fontSize:11, fontWeight:600, textTransform:"uppercase", letterSpacing:"0.08em", marginBottom:10 }}>Submitted Videos</div>
               {existingLinks.split("\n").filter(Boolean).map((link,i) => (
@@ -248,18 +249,18 @@ export default function App() {
   const niche = creator.fields["Niche"] || "";
   const activeCount = orders.filter(o=>["Invited","Accepted"].includes(o.fields.Status)).length;
   const totalEarned = orders.filter(o=>o.fields.Status==="Paid").reduce((s,o)=>s+(o.fields["Total Price"]||0),0);
-  const pendingPay = orders.filter(o=>o.fields.Status==="Posted").reduce((s,o)=>s+(o.fields["Total Price"]||0),0);
+  const pendingPay = orders.filter(o=>o.fields.["Posted","Verified"].includes(o.fields.Status)).reduce((s,o)=>s+(o.fields["Total Price"]||0),0);
 
   const filters = [
     {key:"all",label:"All",count:orders.length},
     {key:"active",label:"Active",count:orders.filter(o=>["Invited","Accepted"].includes(o.fields.Status)).length},
-    {key:"completed",label:"Completed",count:orders.filter(o=>["Posted","Paid"].includes(o.fields.Status)).length},
+    {key:"completed",label:"Completed",count:orders.filter(o=>["Posted","Paid","Verified","Verified"].includes(o.fields.Status)).length},
     {key:"declined",label:"Declined",count:orders.filter(o=>o.fields.Status==="Declined").length},
   ];
 
   const filtered = orders.filter(o=>{
     if(filter==="active") return ["Invited","Accepted"].includes(o.fields.Status);
-    if(filter==="completed") return ["Posted","Paid"].includes(o.fields.Status);
+    if(filter==="completed") return ["Posted","Paid","Verified","Verified"].includes(o.fields.Status);
     if(filter==="declined") return o.fields.Status==="Declined";
     return true;
   });
