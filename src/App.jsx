@@ -112,7 +112,6 @@ const OrderCard = ({ record, onUpdate, expanded, onToggle }) => {
   const assignedPosts = f["Assigned Posts"] || 1;
   const totalPrice = f["Total Price"] || 0;
   const creatorPrice = f["Creator Price"] || 0;
-  const paymentStatus = f["Payment Status"] || "";
   const existingLinks = f["Video Links"] || "";
   const existingPaypal = f["PayPal/Crypto"] || "";
 
@@ -176,7 +175,6 @@ const OrderCard = ({ record, onUpdate, expanded, onToggle }) => {
             <Box label="Posts Required">{assignedPosts}</Box>
             <Box label="Payment"><span style={{ color:"#10B981", fontWeight:600 }}>${totalPrice}</span></Box>
             {creatorPrice > 0 && <Box label="Per Post">${creatorPrice}</Box>}
-            {paymentStatus && <Box label="Payment Status"><span style={{ color:paymentStatus==="Paid"?"#10B981":"#F59E0B" }}>{paymentStatus}</span></Box>}
           </div>
 
           {status==="Invited" && !isExpired && (
