@@ -144,7 +144,7 @@ const OrderCard = ({ record, onUpdate, expanded, onToggle }) => {
     <div style={{ background:"rgba(255,255,255,0.03)", border:`1px solid ${expanded?"rgba(255,255,255,0.12)":"rgba(255,255,255,0.06)"}`, borderRadius:16, overflow:"hidden", transition:"all 0.3s" }}>
       <div onClick={onToggle} style={{ padding:"20px 24px", cursor:"pointer", display:"flex", alignItems:"center", justifyContent:"space-between" }}>
         <div style={{ display:"flex", alignItems:"center", gap:16, flex:1 }}>
-          <div style={{ width:44, height:44, borderRadius:12, background:c.bg, border:`1px solid ${c.border}`, display:"flex", alignItems:"center", justifyContent:"center", fontSize:20, flexShrink:0 }}>{c.icon}</div>
+          <div style={{ width:44, height:44, borderRadius:12, background:c.bg, border:`1px solid ${c.border}`, display:"flex", alignItems:"center", justifyContent:"center", fontSize:20, flexShrink:0, overflow:"hidden" }}>{soundCover ? <img src={soundCover} style={{ width:"100%", height:"100%", objectFit:"cover" }} /> : c.icon}</div>
           <div style={{ flex:1 }}>
             <div style={{ display:"flex", alignItems:"center", gap:10, flexWrap:"wrap" }}>
               <h3 style={{ color:"#fff", fontSize:16, fontWeight:600, margin:0 }}>{campaign}</h3>
