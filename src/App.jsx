@@ -1,30 +1,28 @@
 import { useState } from "react";
 
-const AIRTABLE_TOKEN = "patw6SKVMklpgNGly.eb8d8db042f487d94ec06275dc86da027a276afb50afca244214514b93b03595";
-const BASE_ID = "appcoK3pr8zwz08iX";
-
 async function airtableFetch(path, opts = {}) {
-  const res = await fetch(`https://api.airtable.com/v0/${BASE_ID}${path}`, {
-    ...opts,
-    headers: { Authorization: `Bearer ${AIRTABLE_TOKEN}`, "Content-Type": "application/json", ...(opts.headers||{}) },
+  const res = await fetch(`/api/airtable?path=${encodeURIComponent(path)}`, {
+    method: opts.method || "GET",
+    headers: { "Content-Type": "application/json" },
+    ...(opts.body ? { body: opts.body } : {}),
   });
   if (!res.ok) throw new Error(await res.text());
   return res.json();
 }
 
 async function getCreatorByEmail(email) {
-  const data = await airtableFetch(`/Creators?filterByFormula={Email}="${email.toLowerCase()}"&maxRecords=1`);
+  const data = await airtableFetch(`Creators?filterByFormula={Email}="${email.toLowerCase()}"&maxRecords=1`);
   return data.records[0] || null;
 }
 
 async function getOrdersForCreator(email) {
   const formula = encodeURIComponent(`FIND("${email.toLowerCase()}", ARRAYJOIN({Creator Email}))`);
-  const data = await airtableFetch(`/Orders?filterByFormula=${formula}&sort[0][field]=DM+Sent+Date&sort[0][direction]=desc`);
+  const data = await airtableFetch(`Orders?filterByFormula=${formula}&sort[0][field]=DM+Sent+Date&sort[0][direction]=desc`);
   return data.records;
 }
 
 async function updateOrder(recordId, fields) {
-  return airtableFetch(`/Orders/${recordId}`, { method:"PATCH", body: JSON.stringify({ fields }) });
+  return airtableFetch(`Orders/${recordId}`, { method:"PATCH", body: JSON.stringify({ fields }) });
 }
 
 function generateOTP() { return Math.floor(100000 + Math.random()*900000).toString(); }
