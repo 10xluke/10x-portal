@@ -64,7 +64,7 @@ const Badge = ({ status }) => {
   return (
     <span style={{
       display: "inline-block", padding: "4px 10px", borderRadius: 6,
-      fontSize: 12, fontWeight: 600, color: s.color, background: s.bg,
+      fontSize: 12, fontWeight: 500, color: s.color, background: s.bg,
       fontFamily: font,
     }}>{s.label}</span>
   );
@@ -114,13 +114,13 @@ const LoginScreen = ({ onLogin }) => {
       minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center",
       background: T.bg, fontFamily: font,
     }}>
-      <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+      <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500&display=swap" rel="stylesheet" />
       <div style={{
         width: 400, padding: "44px 36px", borderRadius: 24,
         background: T.card, color: T.text,
       }}>
         <img src={LOGO_SRC} alt="10X Projects" style={{ height: 24, marginBottom: 28, display: "block", filter: "invert(1)" }} />
-        <h1 style={{ fontSize: 30, fontWeight: 700, margin: "0 0 4px", letterSpacing: "-0.03em" }}>
+        <h1 style={{ fontSize: 30, fontWeight: 500, margin: "0 0 4px", letterSpacing: "-0.03em" }}>
           Creator Portal
         </h1>
         <p style={{ color: T.textGray, fontSize: 15, margin: "0 0 36px" }}>
@@ -135,7 +135,7 @@ const LoginScreen = ({ onLogin }) => {
           <button onClick={sendOtp} disabled={loading} style={{
             width: "100%", padding: "14px 0", borderRadius: 10,
             border: "none", background: T.text, color: T.card,
-            fontSize: 15, fontWeight: 600, fontFamily: font, cursor: "pointer",
+            fontSize: 15, fontWeight: 500, fontFamily: font, cursor: "pointer",
             opacity: loading ? 0.5 : 1,
           }}>{loading ? "Checking..." : "Send Code"}</button>
         </>) : (<>
@@ -154,7 +154,7 @@ const LoginScreen = ({ onLogin }) => {
           <button onClick={verify} disabled={loading} style={{
             width: "100%", padding: "14px 0", borderRadius: 10,
             border: "none", background: T.text, color: T.card,
-            fontSize: 15, fontWeight: 600, fontFamily: font, cursor: "pointer",
+            fontSize: 15, fontWeight: 500, fontFamily: font, cursor: "pointer",
             opacity: loading ? 0.5 : 1,
           }}>{loading ? "Verifying..." : "Login"}</button>
           <div style={{ textAlign: "center", marginTop: 14 }}>
@@ -228,7 +228,7 @@ const OrderCard = ({ record, onUpdate, expanded, onToggle }) => {
         </div>
         <div style={{ flex: 1, minWidth: 0 }}>
           <div style={{
-            fontSize: 16, fontWeight: 600, color: T.textWhite,
+            fontSize: 16, fontWeight: 500, color: T.textWhite,
             whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis",
           }}>{campaign}</div>
           <div style={{ marginTop: 4, display: "flex", alignItems: "center", gap: 8 }}>
@@ -257,7 +257,7 @@ const OrderCard = ({ record, onUpdate, expanded, onToggle }) => {
             padding: "24px 20px 16px",
             background: "linear-gradient(transparent, rgba(0,0,0,0.7))",
           }}>
-            <div style={{ fontSize: 22, fontWeight: 700, color: "#FFF", letterSpacing: "-0.02em" }}>{campaign}</div>
+            <div style={{ fontSize: 22, fontWeight: 500, color: "#FFF", letterSpacing: "-0.02em" }}>{campaign}</div>
             {songName && <div style={{ fontSize: 13, color: "rgba(255,255,255,0.7)", marginTop: 2 }}>{songName}</div>}
           </div>
           <button onClick={onToggle} style={{
@@ -276,7 +276,7 @@ const OrderCard = ({ record, onUpdate, expanded, onToggle }) => {
       {!soundCover && (
         <div style={{ padding: "20px 20px 0", display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
           <div>
-            <div style={{ fontSize: 22, fontWeight: 700, letterSpacing: "-0.02em" }}>{campaign}</div>
+            <div style={{ fontSize: 22, fontWeight: 500, letterSpacing: "-0.02em" }}>{campaign}</div>
             {songName && <div style={{ fontSize: 13, color: T.textGray, marginTop: 2 }}>{songName}</div>}
           </div>
           <button onClick={onToggle} style={{
@@ -294,12 +294,12 @@ const OrderCard = ({ record, onUpdate, expanded, onToggle }) => {
         <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 20 }}>
           <Badge status={status} />
           <span style={{ fontSize: 14, color: T.textGray }}>{assignedPosts} post{assignedPosts > 1 ? "s" : ""}</span>
-          <span style={{ marginLeft: "auto", fontSize: 22, fontWeight: 700, color: T.text }}>${totalPrice}</span>
+          <span style={{ marginLeft: "auto", fontSize: 22, fontWeight: 500, color: T.text }}>${totalPrice}</span>
         </div>
 
         {brief && (
           <div style={{ marginBottom: 18 }}>
-            <div style={{ fontSize: 12, fontWeight: 600, color: T.textGray, textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: 6 }}>Brief</div>
+            <div style={{ fontSize: 12, fontWeight: 400, color: T.textGray, textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: 6 }}>Brief</div>
             <p style={{ margin: 0, fontSize: 14, lineHeight: 1.6, color: "#444", padding: "14px 16px", borderRadius: 12, background: "#F6F6F6" }}>{brief}</p>
           </div>
         )}
@@ -311,8 +311,8 @@ const OrderCard = ({ record, onUpdate, expanded, onToggle }) => {
             { label: "Timeline", value: daysLeft !== null && !["Paid","Declined","Verified"].includes(status) ? (isExpired ? "Expired" : `${daysLeft}d left`) : (statusStyle[status]?.label || "—"), color: isExpired ? T.red : (daysLeft !== null && daysLeft <= 3) ? T.yellow : T.text },
           ].map((item) => (
             <div key={item.label} style={{ background: "#FAFAFA", padding: "12px 14px" }}>
-              <div style={{ fontSize: 10, fontWeight: 600, color: T.textGray, textTransform: "uppercase", letterSpacing: "0.04em" }}>{item.label}</div>
-              <div style={{ marginTop: 3, fontSize: 14, fontWeight: 600, color: item.color }}>{item.value}</div>
+              <div style={{ fontSize: 10, fontWeight: 500, color: T.textGray, textTransform: "uppercase", letterSpacing: "0.04em" }}>{item.label}</div>
+              <div style={{ marginTop: 3, fontSize: 14, fontWeight: 500, color: item.color }}>{item.value}</div>
             </div>
           ))}
         </div>
@@ -330,20 +330,20 @@ const OrderCard = ({ record, onUpdate, expanded, onToggle }) => {
             <button onClick={() => doUpdate({ Status: "Accepted" })} disabled={submitting} style={{
               flex: 1, padding: "14px 0", borderRadius: 12, border: "none",
               background: T.text, color: T.card,
-              fontSize: 14, fontWeight: 600, fontFamily: font, cursor: "pointer",
+              fontSize: 14, fontWeight: 500, fontFamily: font, cursor: "pointer",
               opacity: submitting ? 0.5 : 1,
             }}>Accept</button>
             <button onClick={() => doUpdate({ Status: "Declined" })} disabled={submitting} style={{
               flex: 1, padding: "14px 0", borderRadius: 12,
               border: "1.5px solid #DDD", background: "transparent",
-              color: T.textGray, fontSize: 14, fontWeight: 600, fontFamily: font, cursor: "pointer",
+              color: T.textGray, fontSize: 14, fontWeight: 500, fontFamily: font, cursor: "pointer",
               opacity: submitting ? 0.5 : 1,
             }}>Decline</button>
           </div>
         )}
 
         {status === "Accepted" && !isExpired && (<div>
-          <div style={{ fontSize: 12, fontWeight: 600, color: T.textGray, textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: 10 }}>Submit Videos</div>
+          <div style={{ fontSize: 12, fontWeight: 400, color: T.textGray, textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: 10 }}>Submit Videos</div>
           {Array.from({ length: assignedPosts }, (_, i) => (
             <Inp key={i} type="url" placeholder={`Video Link #${i + 1}`}
               value={videoLinks[i] || ""}
@@ -354,13 +354,13 @@ const OrderCard = ({ record, onUpdate, expanded, onToggle }) => {
           <button onClick={handleSubmit} disabled={submitting} style={{
             width: "100%", padding: "14px 0", borderRadius: 12, border: "none",
             background: T.purple, color: "#FFF",
-            fontSize: 14, fontWeight: 600, fontFamily: font, cursor: "pointer",
+            fontSize: 14, fontWeight: 500, fontFamily: font, cursor: "pointer",
             opacity: submitting ? 0.5 : 1,
           }}>{submitting ? "Submitting..." : "Submit"}</button>
         </div>)}
 
         {["Posted","Paid","Verified"].includes(status) && existingLinks && (<div>
-          <div style={{ fontSize: 12, fontWeight: 600, color: T.textGray, textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: 10 }}>Videos</div>
+          <div style={{ fontSize: 12, fontWeight: 400, color: T.textGray, textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: 10 }}>Videos</div>
           {existingLinks.split("\n").filter(Boolean).map((link, i) => (
             <a key={i} href={link} target="_blank" rel="noreferrer" style={{
               display: "block", padding: "11px 14px", borderRadius: 10,
@@ -370,7 +370,7 @@ const OrderCard = ({ record, onUpdate, expanded, onToggle }) => {
           ))}
           {status === "Paid" && (
             <div style={{ marginTop: 8, padding: "14px 16px", borderRadius: 12, background: "rgba(61,166,90,0.08)" }}>
-              <span style={{ color: T.green, fontSize: 14, fontWeight: 600 }}>${totalPrice} paid to {existingPaypal}</span>
+              <span style={{ color: T.green, fontSize: 14, fontWeight: 500 }}>${totalPrice} paid to {existingPaypal}</span>
             </div>
           )}
         </div>)}
@@ -438,7 +438,7 @@ export default function App() {
 
   return (
     <div style={{ minHeight: "100vh", background: T.bg, fontFamily: font, color: T.textWhite }}>
-      <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+      <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500&display=swap" rel="stylesheet" />
 
       <header style={{
         padding: "16px 20px", display: "flex", alignItems: "center", justifyContent: "space-between",
@@ -459,7 +459,7 @@ export default function App() {
       <div style={{ maxWidth: 480, margin: "0 auto", padding: "28px 16px" }}>
         <div style={{ marginBottom: 8 }}>
           <p style={{ color: T.textGray, fontSize: 14, margin: "0 0 4px" }}>Welcome back,</p>
-          <h1 style={{ fontSize: 30, fontWeight: 700, margin: 0, letterSpacing: "-0.03em" }}>{name.split(" ")[0]}.</h1>
+          <h1 style={{ fontSize: 30, fontWeight: 500, margin: 0, letterSpacing: "-0.03em" }}>{name.split(" ")[0]}.</h1>
         </div>
 
         <div style={{
@@ -469,7 +469,7 @@ export default function App() {
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 24 }}>
             <div>
               <div style={{ fontSize: 13, color: T.textGray }}>Total Earned</div>
-              <div style={{ fontSize: 38, fontWeight: 700, letterSpacing: "-0.03em", marginTop: 2, color: T.text }}>${totalEarned}</div>
+              <div style={{ fontSize: 38, fontWeight: 500, letterSpacing: "-0.03em", marginTop: 2, color: T.text }}>${totalEarned}</div>
             </div>
             <div style={{
               width: 44, height: 44, borderRadius: 22,
@@ -478,13 +478,13 @@ export default function App() {
           </div>
           <div style={{ display: "flex", gap: 0, background: "#F2F2F2", borderRadius: 12, overflow: "hidden" }}>
             <div style={{ flex: 1, padding: "14px 16px" }}>
-              <div style={{ fontSize: 11, color: T.textGray, fontWeight: 500 }}>Active</div>
-              <div style={{ fontSize: 20, fontWeight: 700, color: T.orange, marginTop: 2 }}>{activeCount}</div>
+              <div style={{ fontSize: 11, color: T.textGray, fontWeight: 400 }}>Active</div>
+              <div style={{ fontSize: 20, fontWeight: 500, color: T.orange, marginTop: 2 }}>{activeCount}</div>
             </div>
             <div style={{ width: 1, background: "#E4E4E4" }} />
             <div style={{ flex: 1, padding: "14px 16px" }}>
-              <div style={{ fontSize: 11, color: T.textGray, fontWeight: 500 }}>Pending</div>
-              <div style={{ fontSize: 20, fontWeight: 700, color: T.yellow, marginTop: 2 }}>${pendingPay}</div>
+              <div style={{ fontSize: 11, color: T.textGray, fontWeight: 400 }}>Pending</div>
+              <div style={{ fontSize: 20, fontWeight: 500, color: T.yellow, marginTop: 2 }}>${pendingPay}</div>
             </div>
           </div>
         </div>
@@ -497,7 +497,7 @@ export default function App() {
               color: filter === f.key ? T.textWhite : T.textGray,
               fontSize: 13, fontWeight: 500, fontFamily: font, cursor: "pointer",
             }}>
-              {f.label} <span style={{ fontWeight: 400, opacity: 0.6 }}>{f.count}</span>
+              {f.label} <span style={{ fontWeight: 300, opacity: 0.6 }}>{f.count}</span>
             </button>
           ))}
         </div>
