@@ -426,16 +426,20 @@ export default function App() {
 
   const filters = [
     { key: "all", label: "All", count: orders.length },
-    { key: "active", label: "Active", count: orders.filter((o) => ["Invited", "Accepted"].includes(o.fields.Status)).length },
-    { key: "completed", label: "Done", count: orders.filter((o) => ["Posted", "Paid", "Verified"].includes(o.fields.Status)).length },
+    { key: "new", label: "New", count: orders.filter((o) => o.fields.Status === "Invited").length },
+    { key: "progress", label: "In Progress", count: orders.filter((o) => o.fields.Status === "Accepted").length },
+    { key: "submitted", label: "Submitted", count: orders.filter((o) => ["Posted", "Verified"].includes(o.fields.Status)).length },
+    { key: "paid", label: "Paid", count: orders.filter((o) => o.fields.Status === "Paid").length },
     { key: "declined", label: "Declined", count: orders.filter((o) => o.fields.Status === "Declined").length },
   ];
 
   const statusPriority = { Invited: 0, Accepted: 1, Posted: 2, Verified: 2, Paid: 3, Declined: 4 };
 
   const filtered = orders.filter((o) => {
-    if (filter === "active") return ["Invited", "Accepted"].includes(o.fields.Status);
-    if (filter === "completed") return ["Posted", "Paid", "Verified"].includes(o.fields.Status);
+    if (filter === "new") return o.fields.Status === "Invited";
+    if (filter === "progress") return o.fields.Status === "Accepted";
+    if (filter === "submitted") return ["Posted", "Verified"].includes(o.fields.Status);
+    if (filter === "paid") return o.fields.Status === "Paid";
     if (filter === "declined") return o.fields.Status === "Declined";
     return true;
   }).sort((a, b) => {
@@ -500,10 +504,10 @@ export default function App() {
           </div>
         </div>
 
-        <div style={{ display: "flex", gap: 6, marginBottom: 16 }}>
+        <div style={{ display: "flex", gap: 6, marginBottom: 16, flexWrap: "wrap" }}>
           {filters.map((f) => (
             <button key={f.key} onClick={() => setFilter(f.key)} style={{
-              padding: "7px 14px", borderRadius: 8, border: "none",
+              padding: "7px 14px", borderRadius: 8, border: "none", whiteSpace: "nowrap", flexShrink: 0,
               background: filter === f.key ? "rgba(255,255,255,0.12)" : "transparent",
               color: filter === f.key ? T.textWhite : T.textGray,
               fontSize: 13, fontWeight: 500, fontFamily: font, cursor: "pointer",
