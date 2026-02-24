@@ -431,11 +431,20 @@ export default function App() {
     { key: "declined", label: "Declined", count: orders.filter((o) => o.fields.Status === "Declined").length },
   ];
 
+  const statusPriority = { Invited: 0, Accepted: 1, Posted: 2, Verified: 2, Paid: 3, Declined: 4 };
+
   const filtered = orders.filter((o) => {
     if (filter === "active") return ["Invited", "Accepted"].includes(o.fields.Status);
     if (filter === "completed") return ["Posted", "Paid", "Verified"].includes(o.fields.Status);
     if (filter === "declined") return o.fields.Status === "Declined";
     return true;
+  }).sort((a, b) => {
+    const pa = statusPriority[a.fields.Status] ?? 9;
+    const pb = statusPriority[b.fields.Status] ?? 9;
+    if (pa !== pb) return pa - pb;
+    const da = a.fields["Deadline Lookup"]?.[0] || a.fields["Deadline Lookup"] || "";
+    const db = b.fields["Deadline Lookup"]?.[0] || b.fields["Deadline Lookup"] || "";
+    return new Date(da) - new Date(db);
   });
 
   return (
