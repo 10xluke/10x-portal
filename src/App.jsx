@@ -86,7 +86,6 @@ const LoginScreen = ({ onLogin }) => {
   const [email, setEmail] = useState("");
   const [otp, setOtp] = useState("");
   const [pending, setPending] = useState("");
-  const [devCode, setDevCode] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -97,7 +96,14 @@ const LoginScreen = ({ onLogin }) => {
       const c = await getCreatorByEmail(email.trim());
       if (!c) { setError("Email not found. Check with your manager."); setLoading(false); return; }
       const code = generateOTP();
-      setPending(code); setDevCode(code); setStep("otp");
+      setPending(code);
+      const res = await fetch("/api/send-otp", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: email.trim(), code }),
+      });
+      if (!res.ok) throw new Error("Send failed");
+      setStep("otp");
     } catch { setError("Something went wrong. Try again."); }
     setLoading(false);
   };
@@ -142,10 +148,6 @@ const LoginScreen = ({ onLogin }) => {
           <p style={{ color: T.textGray, fontSize: 14, margin: "0 0 14px" }}>
             Code sent to <strong style={{ color: T.text }}>{email}</strong>
           </p>
-          {devCode && <div style={{
-            background: "rgba(224,124,62,0.08)", borderRadius: 8,
-            padding: "10px 14px", marginBottom: 14, fontSize: 13, color: T.orange,
-          }}>Dev code: <strong>{devCode}</strong></div>}
           <Inp type="text" placeholder="000000" value={otp}
             onChange={(e) => setOtp(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && verify()}
