@@ -15,7 +15,7 @@ export default async function handler(req, res) {
 
   try {
     await resend.emails.send({
-      from: '10X Projects <noreply@10xprojects.co>',
+      from: '10X PROJECTS <noreply@10xprojects.co>',
       to: email,
       subject: `${code} is your login code`,
       html: `
