@@ -24,7 +24,6 @@ export default async function handler(req, res) {
               Amount: amount,
               Status: 'Pending',
               PayPal: paypal,
-              'Created Date': new Date().toISOString().split('T')[0],
             },
           },
         ],
