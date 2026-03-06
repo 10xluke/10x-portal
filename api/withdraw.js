@@ -3,7 +3,7 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { email, amount, paypal } = req.body;
+  const { email, amount, paypal, name } = req.body;
 
   if (!email || !amount || !paypal) {
     return res.status(400).json({ error: 'Missing required fields' });
@@ -20,6 +20,7 @@ export default async function handler(req, res) {
           {
             fields: {
               'Creator Email': email,
+              'Creator Name': name || '',
               Amount: amount,
               Status: 'Pending',
               PayPal: paypal,
