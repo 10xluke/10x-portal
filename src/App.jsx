@@ -56,9 +56,8 @@ const statusStyle = {
   Invited:  { color: T.orange, bg: "rgba(224,124,62,0.1)",  label: "New Promo" },
   Accepted: { color: T.blue,   bg: "rgba(91,143,202,0.1)",  label: "In Progress" },
   Posted:   { color: T.purple, bg: "rgba(139,111,192,0.1)", label: "Submitted" },
-  Paid:     { color: T.green,  bg: "rgba(61,166,90,0.1)",   label: "Completed" },
+  Completed: { color: T.green, bg: "rgba(61,166,90,0.1)", label: "Completed" },
   Declined: { color: T.red,    bg: "rgba(199,80,80,0.1)",   label: "Declined" },
-  Verified: { color: T.purple, bg: "rgba(139,111,192,0.1)", label: "Submitted" },
 };
 
 const Badge = ({ status }) => {
@@ -165,7 +164,7 @@ const ExpandedCard = ({ record, onUpdate, onClose }) => {
   const deadline = Array.isArray(f["Deadline Lookup"]) ? f["Deadline Lookup"][0] : "";
   const assignedPosts = f["Assigned Posts"] || 1;
   const totalPrice = f["Total Price"] || 0;
-  const isExpired = deadline && new Date(deadline) < new Date() && !["Posted", "Paid", "Verified"].includes(status);
+  const isExpired = deadline && new Date(deadline) < new Date() && !["Posted", "Completed"].includes(status);
   const daysLeft = deadline ? Math.ceil((new Date(deadline) - new Date()) / 86400000) : null;
   const existingLinks = f["Video Links"] || "";
 
@@ -234,7 +233,7 @@ const ExpandedCard = ({ record, onUpdate, onClose }) => {
           {[
             { label: "Deadline", value: deadline ? new Date(deadline).toLocaleDateString("en", { month: "short", day: "numeric" }) : "—", color: isExpired ? T.red : T.text },
             { label: "Per Post", value: `$${f["Creator Price"] || totalPrice}`, color: T.text },
-            { label: "Timeline", value: daysLeft !== null && !["Paid","Declined","Verified"].includes(status) ? (isExpired ? "Expired" : `${daysLeft}d left`) : (statusStyle[status]?.label || "—"), color: isExpired ? T.red : (daysLeft !== null && daysLeft <= 3) ? T.yellow : T.text },
+            { label: "Timeline", value: daysLeft !== null && !["Completed","Declined"].includes(status) ? (isExpired ? "Expired" : `${daysLeft}d left`) : (statusStyle[status]?.label || "—"), color: isExpired ? T.red : (daysLeft !== null && daysLeft <= 3) ? T.yellow : T.text },
           ].map((item) => (
             <div key={item.label} style={{ background: "#FAFAFA", padding: "12px 14px" }}>
               <div style={{ fontSize: 10, fontWeight: 500, color: T.textGray, textTransform: "uppercase", letterSpacing: "0.04em" }}>{item.label}</div>
@@ -265,7 +264,7 @@ const ExpandedCard = ({ record, onUpdate, onClose }) => {
           </div>
         )}
 
-        {["Posted","Paid","Verified"].includes(status) && existingLinks && (
+        {["Posted","Completed"].includes(status) && existingLinks && (
           <div>
             <div style={{ fontSize: 12, fontWeight: 500, color: T.textGray, textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: 10 }}>Videos</div>
             {existingLinks.split("\n").filter(Boolean).map((link, i) => (
@@ -289,21 +288,20 @@ const CampaignsTab = ({ orders, name, onUpdate }) => {
   const [filter, setFilter] = useState("all");
   const [expanded, setExpanded] = useState(null);
 
-  const statusPriority = { Invited: 0, Accepted: 1, Posted: 2, Verified: 2, Paid: 3, Declined: 4 };
   const filters = [
     { key: "all", label: "All", count: orders.length },
     { key: "new", label: "New", count: orders.filter((o) => o.fields.Status === "Invited").length },
     { key: "progress", label: "In Progress", count: orders.filter((o) => o.fields.Status === "Accepted").length },
-    { key: "submitted", label: "Submitted", count: orders.filter((o) => ["Posted", "Verified"].includes(o.fields.Status)).length },
-    { key: "completed", label: "Completed", count: orders.filter((o) => o.fields.Status === "Paid").length },
+    { key: "submitted", label: "Submitted", count: orders.filter((o) => ["Posted"].includes(o.fields.Status)).length },
+    { key: "completed", label: "Completed", count: orders.filter((o) => o.fields.Status === "Completed").length },
     { key: "declined", label: "Declined", count: orders.filter((o) => o.fields.Status === "Declined").length },
   ];
 
   const filtered = orders.filter((o) => {
     if (filter === "new") return o.fields.Status === "Invited";
     if (filter === "progress") return o.fields.Status === "Accepted";
-    if (filter === "submitted") return ["Posted", "Verified"].includes(o.fields.Status);
-    if (filter === "completed") return o.fields.Status === "Paid";
+    if (filter === "submitted") return ["Posted"].includes(o.fields.Status);
+    if (filter === "completed") return o.fields.Status === "Completed";
     if (filter === "declined") return o.fields.Status === "Declined";
     return true;
   }).sort((a, b) => {
@@ -374,10 +372,10 @@ const PaymentsTab = ({ orders, withdrawals, userEmail, creatorPaypal, onWithdraw
   const [withdrawing, setWithdrawing] = useState(false);
   const [withdrawDone, setWithdrawDone] = useState(false);
 
-  const totalEarned = orders.filter((o) => o.fields.Status === "Paid").reduce((s, o) => s + (o.fields["Total Price"] || 0), 0);
+  const totalEarned = orders.filter((o) => o.fields.Status === "Completed").reduce((s, o) => s + (o.fields["Total Price"] || 0), 0);
   const totalWithdrawn = withdrawals.filter((w) => ["Completed", "Pending"].includes(w.fields.Status)).reduce((s, w) => s + (w.fields.Amount || 0), 0);
   const balance = totalEarned - totalWithdrawn;
-  const pendingPay = orders.filter((o) => ["Posted", "Verified"].includes(o.fields.Status)).reduce((s, o) => s + (o.fields["Total Price"] || 0), 0);
+  const pendingPay = orders.filter((o) => ["Posted"].includes(o.fields.Status)).reduce((s, o) => s + (o.fields["Total Price"] || 0), 0);
 
   const handleWithdraw = async () => {
     if (!creatorPaypal) { alert("Please set your PayPal in Settings first."); return; }
@@ -395,7 +393,7 @@ const PaymentsTab = ({ orders, withdrawals, userEmail, creatorPaypal, onWithdraw
   };
 
   const ledger = [
-    ...orders.filter(o => o.fields.Status === "Paid").map(o => ({
+    ...orders.filter(o => o.fields.Status === "Completed").map(o => ({
       type: "earning", amount: o.fields["Total Price"] || 0,
       label: Array.isArray(o.fields["Campaign Name Lookup"]) ? o.fields["Campaign Name Lookup"][0] : "Campaign",
       date: o.fields["Deadline Lookup"]?.[0] || "", status: "Completed",
