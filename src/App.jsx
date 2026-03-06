@@ -395,7 +395,7 @@ const PaymentsTab = ({ orders, withdrawals, userEmail, creatorPaypal, creatorNam
   const ledger = [
     ...orders.filter(o => o.fields.Status === "Completed").map(o => ({
       type: "earning", amount: o.fields["Total Price"] || 0,
-      label: Array.isArray(o.fields["Campaign Name Lookup"]) ? o.fields["Campaign Name Lookup"][0] : "Campaign",
+      label: "Earned from " + (Array.isArray(o.fields["Campaign Name Lookup"]) ? o.fields["Campaign Name Lookup"][0] : "Campaign"),
       date: "", status: "Completed",
     })),
     ...withdrawals.map(w => ({
