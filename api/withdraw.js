@@ -10,29 +10,25 @@ export default async function handler(req, res) {
   }
 
   try {
-    const response = await fetch(
-      `https://api.airtable.com/v0/${process.env.AIRTABLE_BASE_ID}/Withdrawals`,
-      {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${process.env.AIRTABLE_API_KEY}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          records: [
-            {
-              fields: {
-                'Creator Email': email,
-                Amount: amount,
-                Status: 'Pending',
-                PayPal: paypal,
-                'Created Date': new Date().toISOString().split('T')[0],
-              },
+    const baseUrl = `https://${req.headers.host}`;
+    const path = encodeURIComponent('Withdrawals');
+    const response = await fetch(`${baseUrl}/api/airtable?path=${path}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        records: [
+          {
+            fields: {
+              'Creator Email': email,
+              Amount: amount,
+              Status: 'Pending',
+              PayPal: paypal,
+              'Created Date': new Date().toISOString().split('T')[0],
             },
-          ],
-        }),
-      }
-    );
+          },
+        ],
+      }),
+    });
 
     if (!response.ok) throw new Error(await response.text());
 
