@@ -367,7 +367,7 @@ const CampaignsTab = ({ orders, name, onUpdate }) => {
 };
 
 /* ── TAB: PAYMENTS ─────────────────────────────────────── */
-const PaymentsTab = ({ orders, withdrawals, userEmail, creatorPaypal, onWithdrawDone }) => {
+const PaymentsTab = ({ orders, withdrawals, userEmail, creatorPaypal, creatorName, onWithdrawDone }) => {
   const [showHistory, setShowHistory] = useState(false);
   const [withdrawing, setWithdrawing] = useState(false);
   const [withdrawDone, setWithdrawDone] = useState(false);
@@ -383,7 +383,7 @@ const PaymentsTab = ({ orders, withdrawals, userEmail, creatorPaypal, onWithdraw
     try {
       const res = await fetch("/api/withdraw", {
         method: "POST", headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: userEmail, amount: balance, paypal: creatorPaypal }),
+        body: JSON.stringify({ email: userEmail, amount: balance, paypal: creatorPaypal, name: creatorName }),
       });
       if (!res.ok) throw new Error();
       setWithdrawDone(true);
@@ -396,7 +396,7 @@ const PaymentsTab = ({ orders, withdrawals, userEmail, creatorPaypal, onWithdraw
     ...orders.filter(o => o.fields.Status === "Completed").map(o => ({
       type: "earning", amount: o.fields["Total Price"] || 0,
       label: Array.isArray(o.fields["Campaign Name Lookup"]) ? o.fields["Campaign Name Lookup"][0] : "Campaign",
-      date: o.fields["Deadline Lookup"]?.[0] || "", status: "Completed",
+      date: "", status: "Completed",
     })),
     ...withdrawals.map(w => ({
       type: "withdrawal", amount: w.fields.Amount || 0,
@@ -429,11 +429,6 @@ const PaymentsTab = ({ orders, withdrawals, userEmail, creatorPaypal, onWithdraw
           <div style={{ flex: 1, padding: "14px 16px" }}>
             <div style={{ fontSize: 11, color: T.textGray, fontWeight: 400 }}>Total Earned</div>
             <div style={{ fontSize: 18, fontWeight: 500, color: T.text, marginTop: 2 }}>${totalEarned}</div>
-          </div>
-          <div style={{ width: 1, background: "#E4E4E4" }} />
-          <div style={{ flex: 1, padding: "14px 16px" }}>
-            <div style={{ fontSize: 11, color: T.textGray, fontWeight: 400 }}>Processing</div>
-            <div style={{ fontSize: 18, fontWeight: 500, color: T.yellow, marginTop: 2 }}>${pendingPay}</div>
           </div>
           <div style={{ width: 1, background: "#E4E4E4" }} />
           <div style={{ flex: 1, padding: "14px 16px" }}>
@@ -608,7 +603,7 @@ export default function App() {
           <div style={{ textAlign: "center", padding: 48, color: T.textGray, fontSize: 14 }}>Loading...</div>
         ) : (<>
           {tab === "campaigns" && <CampaignsTab orders={orders} name={name} onUpdate={handleUpdate} />}
-          {tab === "payments" && <PaymentsTab orders={orders} withdrawals={withdrawals} userEmail={userEmail} creatorPaypal={creator.fields.PayPal || ""} onWithdrawDone={handleWithdrawDone} />}
+          {tab === "payments" && <PaymentsTab orders={orders} withdrawals={withdrawals} userEmail={userEmail} creatorPaypal={creator.fields.PayPal || ""} creatorName={creator.fields["Creator Name"] || creator.fields["Name"] || userEmail} onWithdrawDone={handleWithdrawDone} />}
           {tab === "settings" && <SettingsTab creator={creator} userEmail={userEmail} onPaypalSaved={handlePaypalSaved} />}
         </>)}
       </div>
