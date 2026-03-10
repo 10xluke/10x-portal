@@ -547,6 +547,19 @@ const AccountTab = ({ creator, userEmail, onPaypalSaved, onLogout }) => {
           <div style={{ fontSize: 15, fontWeight: 500, color: "#FFF", marginTop: 3 }}>{userEmail}</div>
         </div>
       </div>
+      <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)", borderRadius: 22, padding: "24px 20px", marginTop: 12 }}>
+        <div style={{ fontSize: 10, color: "rgba(255,255,255,0.25)", letterSpacing: "0.08em", fontWeight: 500, marginBottom: 18 }}>RATE</div>
+        <div style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.06)", borderRadius: 16, padding: "16px" }}>
+          <div style={{ fontSize: 11, color: "rgba(255,255,255,0.25)" }}>Base Price Per Post</div>
+          <div style={{ fontSize: 15, fontWeight: 500, color: "#FFF", marginTop: 3 }}>${creator.fields["Price per Post"] || "—"}</div>
+        </div>
+        <div style={{ fontSize: 12, color: "rgba(255,255,255,0.25)", marginTop: 12, lineHeight: 1.5 }}>
+          To change your rate, contact support at{" "}
+          <a href="https://instagram.com/bigrecordspromo" target="_blank" rel="noreferrer" style={{ color: "rgba(255,255,255,0.4)", textDecoration: "none" }}>@bigrecordspromo</a>
+          {" "}or{" "}
+          <a href="mailto:promo@bigrecords.com" style={{ color: "rgba(255,255,255,0.4)", textDecoration: "none" }}>promo@bigrecords.com</a>
+        </div>
+      </div>
       <button onClick={onLogout} style={{
         width: "100%", padding: "14px 0", borderRadius: 14, marginTop: 24,
         background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.06)",
