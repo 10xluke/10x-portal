@@ -249,16 +249,41 @@ const CampaignSheet = ({ record, onUpdate, onClose }) => {
         <div style={{ fontSize: 28, fontWeight: 500, color: "#FFF", letterSpacing: "-0.03em", marginTop: 12 }}>{campaign}</div>
         <div style={{ fontSize: 14, color: "rgba(255,255,255,0.4)", marginTop: 4 }}>{songName}</div>
 
-        <div style={{ display: "flex", alignItems: "baseline", gap: 16, margin: "28px 0", paddingBottom: 24, borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+        <div style={{ display: "flex", alignItems: "baseline", gap: 16, margin: "28px 0 20px" }}>
           <span style={{ fontSize: 42, fontWeight: 500, color: "#FFF", letterSpacing: "-0.04em" }}>${totalPrice}</span>
-          <div style={{ display: "flex", gap: 16 }}>
-            <span style={{ fontSize: 13, color: "rgba(255,255,255,0.35)" }}>{assignedPosts} post{assignedPosts > 1 ? "s" : ""}</span>
-            {deadline && <span style={{ fontSize: 13, color: isExpired ? "#FF6B6B" : "rgba(255,255,255,0.35)" }}>{new Date(deadline).toLocaleDateString("en", { month: "short", day: "numeric" })}</span>}
-            {daysLeft !== null && daysLeft > 0 && !["Completed","Declined"].includes(status) && (
-              <span style={{ fontSize: 13, color: daysLeft <= 3 ? "#FBBF24" : "rgba(255,255,255,0.35)" }}>{daysLeft}d left</span>
-            )}
-          </div>
+          <span style={{ fontSize: 13, color: "rgba(255,255,255,0.35)" }}>{assignedPosts} post{assignedPosts > 1 ? "s" : ""}</span>
         </div>
+
+        {deadline && !["Completed","Declined"].includes(status) && (
+          <div style={{
+            padding: "14px 18px", borderRadius: 16, marginBottom: 24,
+            background: isExpired ? "rgba(255,107,107,0.08)" : daysLeft <= 3 ? "rgba(251,191,36,0.08)" : "rgba(255,255,255,0.04)",
+            border: `1px solid ${isExpired ? "rgba(255,107,107,0.15)" : daysLeft <= 3 ? "rgba(251,191,36,0.15)" : "rgba(255,255,255,0.06)"}`,
+            display: "flex", justifyContent: "space-between", alignItems: "center",
+          }}>
+            <div>
+              <div style={{ fontSize: 10, color: "rgba(255,255,255,0.3)", letterSpacing: "0.06em", fontWeight: 500, marginBottom: 4 }}>DEADLINE</div>
+              <div style={{ fontSize: 16, fontWeight: 500, color: isExpired ? "#FF6B6B" : daysLeft <= 3 ? "#FBBF24" : "#FFF" }}>
+                {new Date(deadline).toLocaleDateString("en", { month: "long", day: "numeric", year: "numeric" })}
+              </div>
+            </div>
+            <span style={{
+              padding: "5px 12px", borderRadius: 8, fontSize: 13, fontWeight: 500,
+              color: isExpired ? "#FF6B6B" : daysLeft <= 3 ? "#FBBF24" : "#FFF",
+              background: isExpired ? "rgba(255,107,107,0.15)" : daysLeft <= 3 ? "rgba(251,191,36,0.15)" : "rgba(255,255,255,0.08)",
+            }}>
+              {isExpired ? "Expired" : `${daysLeft}d left`}
+            </span>
+          </div>
+        )}
+
+        {["Invited","Accepted"].includes(status) && !isExpired && (
+          <div style={{ fontSize: 12, color: "rgba(255,255,255,0.3)", marginBottom: 24, lineHeight: 1.5 }}>
+            Please submit your video before the deadline. Promos not submitted on time will be automatically cancelled.
+          </div>
+        )}
+
+        <div style={{ borderBottom: "1px solid rgba(255,255,255,0.06)", marginBottom: 24 }} />
 
         {brief && (
           <div style={{ marginBottom: 24 }}>
@@ -277,7 +302,6 @@ const CampaignSheet = ({ record, onUpdate, onClose }) => {
             <div style={{ width: 40, height: 40, borderRadius: 12, background: "rgba(255,255,255,0.06)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 16 }}>♫</div>
             <div>
               <div style={{ fontSize: 14, fontWeight: 500 }}>Sound Link</div>
-              <div style={{ fontSize: 11, color: "rgba(255,255,255,0.3)", marginTop: 2 }}>Open in TikTok</div>
             </div>
             <span style={{ marginLeft: "auto", color: "rgba(255,255,255,0.2)", fontSize: 18 }}>↗</span>
           </a>
