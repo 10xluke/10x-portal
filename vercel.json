@@ -1,3 +1,6 @@
 {
-  "rewrites": [{ "source": "/(.*)", "destination": "/" }]
+  "rewrites": [
+    { "source": "/guide", "destination": "/guide.html" },
+    { "source": "/((?!api|assets|guide\\.html|favicon\\.ico|og-image\\.png|manifest\\.json).*)", "destination": "/index.html" }
+  ]
 }
