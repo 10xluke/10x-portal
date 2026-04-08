@@ -15,7 +15,7 @@ export default async function handler(req, res) {
     const { data, error } = await resend.emails.send({
       from: "BIG Records <noreply@bigrecords.com>",
       to: email,
-      subject: "Welcome to BIG Records",
+      subject: "[BIG Records] You've been invited to our Creator Portal",
       html: `
 <!DOCTYPE html>
 <html>
@@ -34,16 +34,16 @@ export default async function handler(req, res) {
   </td></tr>
 
   <!-- Greeting -->
-  <tr><td style="font-size:15px;color:#e0e0e0;font-weight:300;padding-bottom:20px;line-height:1.6;">
+  <tr><td style="font-size:15px;color:#e0e0e0;font-weight:400;padding-bottom:20px;line-height:1.6;">
     Hey ${name},
   </td></tr>
 
   <!-- Body -->
-  <tr><td style="font-size:14px;color:rgba(255,255,255,0.6);font-weight:300;padding-bottom:8px;line-height:1.7;">
+  <tr><td style="font-size:14px;color:rgba(255,255,255,0.65);font-weight:400;padding-bottom:8px;line-height:1.7;">
     Welcome to BIG Records! You've been invited to join our creator network for TikTok promo campaigns.
   </td></tr>
 
-  <tr><td style="font-size:14px;color:rgba(255,255,255,0.6);font-weight:300;padding-bottom:24px;line-height:1.7;">
+  <tr><td style="font-size:14px;color:rgba(255,255,255,0.65);font-weight:400;padding-bottom:24px;line-height:1.7;">
     Here's how it works:
   </td></tr>
 
@@ -52,15 +52,15 @@ export default async function handler(req, res) {
     <table width="100%" cellpadding="0" cellspacing="0">
       <tr><td style="padding:12px 16px;background:rgba(255,255,255,0.04);border-radius:12px 12px 4px 4px;border:1px solid rgba(255,255,255,0.06);border-bottom:none;">
         <span style="color:rgba(255,255,255,0.25);font-size:12px;font-weight:400;">1</span>
-        <span style="color:rgba(255,255,255,0.7);font-size:13px;font-weight:300;margin-left:10px;">We invite you to a campaign with a TikTok sound</span>
+        <span style="color:rgba(255,255,255,0.8);font-size:13px;font-weight:400;margin-left:10px;">We invite you to a campaign with a TikTok sound</span>
       </td></tr>
       <tr><td style="padding:12px 16px;background:rgba(255,255,255,0.04);border-left:1px solid rgba(255,255,255,0.06);border-right:1px solid rgba(255,255,255,0.06);">
         <span style="color:rgba(255,255,255,0.25);font-size:12px;font-weight:400;">2</span>
-        <span style="color:rgba(255,255,255,0.7);font-size:13px;font-weight:300;margin-left:10px;">You accept, create a video, and post it on TikTok</span>
+        <span style="color:rgba(255,255,255,0.8);font-size:13px;font-weight:400;margin-left:10px;">You accept, create a video, and post it on TikTok</span>
       </td></tr>
       <tr><td style="padding:12px 16px;background:rgba(255,255,255,0.04);border-radius:4px 4px 12px 12px;border:1px solid rgba(255,255,255,0.06);border-top:none;">
         <span style="color:rgba(255,255,255,0.25);font-size:12px;font-weight:400;">3</span>
-        <span style="color:rgba(255,255,255,0.7);font-size:13px;font-weight:300;margin-left:10px;">Submit the link in the portal and get paid via PayPal</span>
+        <span style="color:rgba(255,255,255,0.8);font-size:13px;font-weight:400;margin-left:10px;">Submit the link in the portal and get paid via PayPal</span>
       </td></tr>
     </table>
   </td></tr>
@@ -79,7 +79,7 @@ export default async function handler(req, res) {
   </td></tr>
 
   <!-- Footer -->
-  <tr><td style="font-size:12px;color:rgba(255,255,255,0.2);font-weight:300;padding-top:24px;border-top:1px solid rgba(255,255,255,0.06);line-height:1.6;">
+  <tr><td style="font-size:12px;color:rgba(255,255,255,0.25);font-weight:400;padding-top:24px;border-top:1px solid rgba(255,255,255,0.06);line-height:1.6;">
     Log in with this email address (<span style="color:rgba(255,255,255,0.35);">${email}</span>) to access the portal.<br>
     Questions? DM <a href="https://instagram.com/bigrecordspromo" style="color:rgba(255,255,255,0.35);text-decoration:none;">@bigrecordspromo</a> or email <a href="mailto:promo@bigrecords.com" style="color:rgba(255,255,255,0.35);text-decoration:none;">promo@bigrecords.com</a>
   </td></tr>
