@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<title>Creator Guide — BIG Records</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #080808;
+    color: #e8e8e8;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+  }
+  a { color: rgba(255,255,255,0.5); text-decoration: none; }
+  a:hover { color: rgba(255,255,255,0.8); }
+
+  .header {
+    padding: 16px 20px;
+    display: flex; align-items: center; justify-content: space-between;
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(8,8,8,0.85);
+    backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+  .header a.back {
+    font-size: 13px; font-weight: 400;
+    color: rgba(255,255,255,0.4);
+    display: flex; align-items: center; gap: 6px;
+  }
+  .header a.back:hover { color: rgba(255,255,255,0.7); }
+  .header .logo {
+    font-size: 14px; font-weight: 600; color: #fff; letter-spacing: -0.3px;
+  }
+
+  .container {
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 32px 20px 80px;
+  }
+
+  h1 {
+    font-size: 28px; font-weight: 200;
+    letter-spacing: -0.5px; margin-bottom: 8px;
+  }
+  .subtitle {
+    font-size: 14px; font-weight: 300;
+    color: rgba(255,255,255,0.35);
+    margin-bottom: 40px; line-height: 1.5;
+  }
+
+  .section { margin-bottom: 44px; }
+  .section-number {
+    font-size: 11px; font-weight: 400;
+    color: rgba(255,255,255,0.2);
+    letter-spacing: 0.06em; margin-bottom: 8px;
+  }
+  .section-title {
+    font-size: 16px; font-weight: 300;
+    margin-bottom: 12px; letter-spacing: -0.2px;
+  }
+  .section-body {
+    font-size: 13.5px; font-weight: 200;
+    color: rgba(255,255,255,0.55); line-height: 1.7;
+  }
+  .section-body strong {
+    font-weight: 400; color: rgba(255,255,255,0.75);
+  }
+
+  .demo-placeholder {
+    width: 100%;
+    aspect-ratio: 9/16;
+    max-height: 420px;
+    border-radius: 20px;
+    margin-top: 16px;
+    border: 1px solid rgba(255,255,255,0.06);
+    background: linear-gradient(160deg, #111 0%, #0d0d0d 50%, #141414 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    color: rgba(255,255,255,0.15);
+    font-size: 12px; font-weight: 300;
+    overflow: hidden;
+    position: relative;
+  }
+  .demo-placeholder .ph-icon {
+    width: 48px; height: 48px;
+    border-radius: 14px;
+    border: 1px dashed rgba(255,255,255,0.08);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+  }
+  .demo-placeholder .ph-label {
+    font-size: 11px; color: rgba(255,255,255,0.12);
+  }
+  /* When real screenshots are added */
+  .demo-img {
+    width: 100%;
+    border-radius: 20px;
+    margin-top: 16px;
+    border: 1px solid rgba(255,255,255,0.06);
+    overflow: hidden;
+  }
+  .demo-img img { width: 100%; display: block; }
+
+  .demo-caption {
+    font-size: 11px; font-weight: 300;
+    color: rgba(255,255,255,0.2);
+    margin-top: 8px; text-align: center;
+  }
+
+  .card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 20px; padding: 20px;
+    margin-top: 16px;
+  }
+
+  .status-row {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+  .status-row:last-child { border-bottom: none; }
+  .status-dot {
+    width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+  }
+  .status-dot.invited { background: #60A5FA; }
+  .status-dot.accepted { background: #A78BFA; }
+  .status-dot.posted { background: #FBBF24; }
+  .status-dot.completed { background: #34D399; }
+  .status-dot.declined { background: rgba(255,255,255,0.15); }
+  .status-label {
+    font-size: 13px; font-weight: 300; color: rgba(255,255,255,0.7);
+    min-width: 80px;
+  }
+  .status-desc {
+    font-size: 12px; font-weight: 200; color: rgba(255,255,255,0.35);
+  }
+
+  .tip {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 14px; padding: 16px; margin-top: 12px;
+    font-size: 12.5px; font-weight: 200;
+    color: rgba(255,255,255,0.45); line-height: 1.6;
+  }
+
+  .divider {
+    height: 1px;
+    background: rgba(255,255,255,0.04);
+    margin: 44px 0;
+  }
+
+  .faq-item { margin-bottom: 20px; }
+  .faq-item:last-child { margin-bottom: 0; }
+  .faq-q {
+    font-size: 13px; font-weight: 300;
+    color: rgba(255,255,255,0.7); margin-bottom: 6px;
+  }
+  .faq-a {
+    font-size: 12.5px; font-weight: 200;
+    color: rgba(255,255,255,0.4); line-height: 1.6;
+  }
+
+  .support-box {
+    text-align: center; padding: 32px 0;
+    color: rgba(255,255,255,0.2);
+    font-size: 13px; font-weight: 300;
+  }
+  .support-box a { color: rgba(255,255,255,0.4); }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <a class="back" href="/">← Portal</a>
+  <div class="logo">BIG Records</div>
+</div>
+
+<div class="container">
+
+  <h1>Creator Guide</h1>
+  <p class="subtitle">Everything you need to know about working with BIG Records promos.</p>
+
+  <!-- ── 01 LOGIN ── -->
+  <div class="section">
+    <div class="section-number">01</div>
+    <div class="section-title">Log in to the portal</div>
+    <div class="section-body">
+      Go to <strong>app.bigrecords.com</strong> and enter the email we invited you with.
+      You'll receive a <strong>6-digit code</strong> — enter it to log in. No password needed.
+    </div>
+    <div class="demo-placeholder" id="img-login">
+      <div class="ph-icon">📱</div>
+      <div class="ph-label">Login screen</div>
+    </div>
+    <div class="demo-caption">Enter your email → receive a code → you're in</div>
+  </div>
+
+  <!-- ── 02 PROMOS TAB ── -->
+  <div class="section">
+    <div class="section-number">02</div>
+    <div class="section-title">View your campaigns</div>
+    <div class="section-body">
+      The <strong>Promos</strong> tab shows all campaigns assigned to you.
+      Each card shows the campaign name, payment amount, and deadline.
+      Tap a card to see full details.
+    </div>
+    <div class="demo-placeholder" id="img-promos">
+      <div class="ph-icon">🎵</div>
+      <div class="ph-label">Promos tab</div>
+    </div>
+    <div class="demo-caption">Your campaigns — active and completed</div>
+  </div>
+
+  <!-- ── 03 ACCEPT / DECLINE ── -->
+  <div class="section">
+    <div class="section-number">03</div>
+    <div class="section-title">Accept or decline</div>
+    <div class="section-body">
+      New invites show <strong>Accept</strong> and <strong>Decline</strong> buttons.
+      Accepting means you commit to posting a video using the campaign sound before the deadline.
+    </div>
+    <div class="demo-placeholder" id="img-accept">
+      <div class="ph-icon">✓</div>
+      <div class="ph-label">Accept / Decline</div>
+    </div>
+    <div class="tip">⚠️ Only accept if you can deliver before the deadline. Campaigns that pass the deadline without a submission are <strong>automatically declined</strong>.</div>
+  </div>
+
+  <!-- ── 04 SUBMIT VIDEO ── -->
+  <div class="section">
+    <div class="section-number">04</div>
+    <div class="section-title">Post & submit your video</div>
+    <div class="section-body">
+      Create your TikTok video using the <strong>sound link</strong> from the campaign.
+      Post it on TikTok, then open the campaign in the portal and <strong>paste your video URL</strong>.
+    </div>
+    <div class="demo-placeholder" id="img-submit">
+      <div class="ph-icon">🔗</div>
+      <div class="ph-label">Submit video link</div>
+    </div>
+    <div class="demo-caption">Paste your TikTok video link after posting</div>
+    <div class="tip">💡 Make sure the sound in your video matches the campaign sound before submitting.</div>
+  </div>
+
+  <!-- ── 05 STATUSES ── -->
+  <div class="section">
+    <div class="section-number">05</div>
+    <div class="section-title">Campaign statuses</div>
+    <div class="section-body">Each campaign goes through these stages:</div>
+    <div class="card">
+      <div class="status-row">
+        <div class="status-dot invited"></div>
+        <div class="status-label">Invited</div>
+        <div class="status-desc">You've been invited — accept or decline</div>
+      </div>
+      <div class="status-row">
+        <div class="status-dot accepted"></div>
+        <div class="status-label">Accepted</div>
+        <div class="status-desc">You accepted — post your video & submit the link</div>
+      </div>
+      <div class="status-row">
+        <div class="status-dot posted"></div>
+        <div class="status-label">Posted</div>
+        <div class="status-desc">Video submitted — we're reviewing</div>
+      </div>
+      <div class="status-row">
+        <div class="status-dot completed"></div>
+        <div class="status-label">Completed</div>
+        <div class="status-desc">Approved — payment added to your wallet</div>
+      </div>
+      <div class="status-row">
+        <div class="status-dot declined"></div>
+        <div class="status-label">Declined</div>
+        <div class="status-desc">You declined or the deadline passed</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 06 WALLET ── -->
+  <div class="section">
+    <div class="section-number">06</div>
+    <div class="section-title">Wallet & payments</div>
+    <div class="section-body">
+      The <strong>Wallet</strong> tab shows your balance and history.
+      Once a campaign is completed, the payment is added to your balance.
+      Tap <strong>Withdraw</strong> to request a PayPal payout.
+    </div>
+    <div class="demo-placeholder" id="img-wallet">
+      <div class="ph-icon">💰</div>
+      <div class="ph-label">Wallet tab</div>
+    </div>
+    <div class="demo-caption">Track your earnings and request withdrawals</div>
+  </div>
+
+  <!-- ── 07 ACCOUNT ── -->
+  <div class="section">
+    <div class="section-number">07</div>
+    <div class="section-title">Account settings</div>
+    <div class="section-body">
+      In the <strong>Account</strong> tab, save your <strong>PayPal email</strong> — this is where payments are sent.
+      You can also access this guide and FAQ from there.
+    </div>
+    <div class="demo-placeholder" id="img-account">
+      <div class="ph-icon">⚙️</div>
+      <div class="ph-label">Account tab</div>
+    </div>
+    <div class="tip">💡 Keep your PayPal email up to date. We can only send payments to the email saved in your account.</div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ── FAQ ── -->
+  <div class="section" id="faq">
+    <div class="section-number">FAQ</div>
+    <div class="section-title">Frequently asked questions</div>
+
+    <div class="card">
+      <div class="faq-item">
+        <div class="faq-q">Can I change my mind after accepting?</div>
+        <div class="faq-a">You can't undo an acceptance through the portal. If you don't submit before the deadline, the campaign will auto-decline. Need to cancel early? Contact us.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">What if I post the wrong sound?</div>
+        <div class="faq-a">We'll flag it during review. You may need to re-upload with the correct sound before the deadline.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">How long until I get paid?</div>
+        <div class="faq-a">After your campaign is Completed, request a withdrawal in the Wallet tab. Payments are processed within 1–3 business days via PayPal.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Can I delete my TikTok video after getting paid?</div>
+        <div class="faq-a">No — videos must stay up permanently. Deleting a promo video may result in payment being revoked and removal from future campaigns.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">I didn't receive the login code</div>
+        <div class="faq-a">Check your spam/junk folder. The email comes from noreply@bigrecords.com. Still nothing? DM us on Instagram.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">How do I update my PayPal?</div>
+        <div class="faq-a">Go to the Account tab in the portal and save your new PayPal email anytime.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="support-box">
+    Still need help? DM us on <a href="https://instagram.com/bigrecordspromo" target="_blank">@bigrecordspromo</a>
+    or email <a href="mailto:promo@bigrecords.com">promo@bigrecords.com</a>
+  </div>
+
+</div>
+
+<!--
+  ██ TO ADD REAL SCREENSHOTS ██
+  
+  1. Screenshot each screen on iPhone
+  2. Upload to public/images/ (guide-login.png, guide-promos.png, etc.)
+  3. Replace <div class="demo-placeholder" id="img-xxx"> with:
+     <div class="demo-img"><img src="/images/guide-login.png" alt="Login screen"></div>
+  
+  IDs: img-login, img-promos, img-accept, img-submit, img-wallet, img-account
+-->
+
+</body>
+</html>
