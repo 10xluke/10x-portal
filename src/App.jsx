@@ -560,6 +560,24 @@ const AccountTab = ({ creator, userEmail, onPaypalSaved, onLogout }) => {
           <a href="mailto:promo@bigrecords.com" style={{ color: "rgba(255,255,255,0.4)", textDecoration: "none" }}>promo@bigrecords.com</a>
         </div>
       </div>
+      {/* Help & Info */}
+      <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)", borderRadius: 22, padding: "24px 20px", marginTop: 12 }}>
+        <div style={{ fontSize: 10, color: "rgba(255,255,255,0.25)", letterSpacing: "0.08em", fontWeight: 500, marginBottom: 18 }}>HELP & INFO</div>
+        <a href="/guide" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "14px 16px", borderRadius: 14, background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.06)", textDecoration: "none", marginBottom: 8 }}>
+          <div>
+            <div style={{ fontSize: 14, fontWeight: 400, color: "#FFF" }}>Creator Guide</div>
+            <div style={{ fontSize: 11, color: "rgba(255,255,255,0.3)", marginTop: 2 }}>How promos, payments & deadlines work</div>
+          </div>
+          <div style={{ fontSize: 16, color: "rgba(255,255,255,0.2)" }}>→</div>
+        </a>
+        <a href="/guide#faq" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "14px 16px", borderRadius: 14, background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.06)", textDecoration: "none" }}>
+          <div>
+            <div style={{ fontSize: 14, fontWeight: 400, color: "#FFF" }}>FAQ</div>
+            <div style={{ fontSize: 11, color: "rgba(255,255,255,0.3)", marginTop: 2 }}>Common questions answered</div>
+          </div>
+          <div style={{ fontSize: 16, color: "rgba(255,255,255,0.2)" }}>→</div>
+        </a>
+      </div>
       <button onClick={onLogout} style={{
         width: "100%", padding: "14px 0", borderRadius: 14, marginTop: 24,
         background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.06)",
