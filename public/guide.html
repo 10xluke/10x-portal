@@ -104,8 +104,37 @@
     margin-top: 16px;
     border: 1px solid rgba(255,255,255,0.06);
     overflow: hidden;
+    cursor: pointer;
   }
   .demo-img img { width: 100%; display: block; }
+
+  /* Lightbox */
+  .lightbox {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.92);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    cursor: pointer;
+  }
+  .lightbox.active { display: flex; }
+  .lightbox img {
+    max-width: 100%;
+    max-height: 90vh;
+    border-radius: 16px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  }
+  .lightbox-close {
+    position: fixed;
+    top: 16px; right: 20px;
+    font-size: 24px;
+    color: rgba(255,255,255,0.5);
+    cursor: pointer;
+    z-index: 10000;
+  }
 
   .demo-caption {
     font-size: 11px; font-weight: 300;
@@ -356,4 +385,31 @@
   ██ TO ADD REAL SCREENSHOTS ██
   
   1. Screenshot each screen on iPhone
-  2. Upload to public/images/ (guide-login.png, guide-promos.pn
+  2. Upload to public/images/ (guide-login.png, guide-promos.png, guide-accept.png, etc.)
+  3. Replace placeholder divs with demo-img + real img tags
+  
+  IDs: img-login, img-promos, img-accept, img-submit, img-wallet, img-account
+-->
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <div class="lightbox-close">✕</div>
+  <img id="lightbox-img" src="" alt="">
+</div>
+
+<script>
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('active');
+}
+document.querySelectorAll('.demo-img').forEach(function(el) {
+  el.addEventListener('click', function() {
+    var src = el.querySelector('img').src;
+    document.getElementById('lightbox-img').src = src;
+    document.getElementById('lightbox').classList.add('active');
+  });
+});
+document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeLightbox(); });
+</script>
+
+</body>
+</html>
