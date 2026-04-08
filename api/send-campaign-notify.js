@@ -18,7 +18,7 @@ export default async function handler(req, res) {
     const { data, error } = await resend.emails.send({
       from: "BIG Records <noreply@bigrecords.com>",
       to: email,
-      subject: `New campaign: ${campaign}`,
+      subject: `[BIG Records] New campaign available`,
       html: `
 <!DOCTYPE html>
 <html>
@@ -37,12 +37,12 @@ export default async function handler(req, res) {
   </td></tr>
 
   <!-- Greeting -->
-  <tr><td style="font-size:15px;color:#e0e0e0;font-weight:300;padding-bottom:20px;line-height:1.6;">
+  <tr><td style="font-size:15px;color:#e0e0e0;font-weight:400;padding-bottom:20px;line-height:1.6;">
     Hey ${name},
   </td></tr>
 
   <!-- Body -->
-  <tr><td style="font-size:14px;color:rgba(255,255,255,0.6);font-weight:300;padding-bottom:24px;line-height:1.7;">
+  <tr><td style="font-size:14px;color:rgba(255,255,255,0.65);font-weight:400;padding-bottom:24px;line-height:1.7;">
     You've been invited to a new promo campaign:
   </td></tr>
 
@@ -50,9 +50,9 @@ export default async function handler(req, res) {
   <tr><td style="padding-bottom:28px;">
     <table width="100%" cellpadding="0" cellspacing="0" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);border-radius:14px;">
       <tr><td style="padding:18px 20px;">
-        <div style="font-size:16px;color:#ffffff;font-weight:400;margin-bottom:12px;letter-spacing:-0.2px;">${campaign}</div>
-        ${pay ? `<div style="font-size:13px;color:rgba(255,255,255,0.5);font-weight:300;margin-bottom:6px;">Payment: <span style="color:#fff;font-weight:400;">${pay}</span></div>` : ""}
-        ${dl ? `<div style="font-size:13px;color:rgba(255,255,255,0.5);font-weight:300;">Deadline: <span style="color:#fff;font-weight:400;">${dl}</span></div>` : ""}
+        <div style="font-size:16px;color:#ffffff;font-weight:500;margin-bottom:12px;letter-spacing:-0.2px;">${campaign}</div>
+        ${pay ? `<div style="font-size:13px;color:rgba(255,255,255,0.55);font-weight:400;margin-bottom:6px;">Payment: <span style="color:#fff;font-weight:500;">${pay}</span></div>` : ""}
+        ${dl ? `<div style="font-size:13px;color:rgba(255,255,255,0.55);font-weight:400;">Deadline: <span style="color:#fff;font-weight:500;">${dl}</span></div>` : ""}
       </td></tr>
     </table>
   </td></tr>
@@ -65,7 +65,7 @@ export default async function handler(req, res) {
   </td></tr>
 
   <!-- Footer -->
-  <tr><td style="font-size:12px;color:rgba(255,255,255,0.2);font-weight:300;padding-top:24px;border-top:1px solid rgba(255,255,255,0.06);line-height:1.6;">
+  <tr><td style="font-size:12px;color:rgba(255,255,255,0.25);font-weight:400;padding-top:24px;border-top:1px solid rgba(255,255,255,0.06);line-height:1.6;">
     Log in to the portal to accept or decline this campaign.<br>
     Questions? DM <a href="https://instagram.com/bigrecordspromo" style="color:rgba(255,255,255,0.35);text-decoration:none;">@bigrecordspromo</a> or email <a href="mailto:promo@bigrecords.com" style="color:rgba(255,255,255,0.35);text-decoration:none;">promo@bigrecords.com</a>
   </td></tr>
