@@ -33,7 +33,7 @@ export default async function handler(req, res) {
 
   <!-- Logo -->
   <tr><td style="padding-bottom:32px;">
-    <img src="https://app.bigrecords.com/images/logo-email.png" alt="BIG Records" style="height:40px;" />
+    <img src="https://app.bigrecords.com/images/logo-email.png" alt="BIG Records" style="height:72px;width:72px;" />
   </td></tr>
 
   <!-- Greeting -->
