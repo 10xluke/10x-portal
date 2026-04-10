@@ -426,7 +426,7 @@ const WalletTab = ({ orders, withdrawals, userEmail, creatorPaypal, creatorName,
   const [withdrawDone, setWithdrawDone] = useState(false);
 
   const totalEarned = orders.filter((o) => o.fields.Status === "Completed").reduce((s, o) => s + (o.fields["Total Price"] || 0), 0);
-  const totalWithdrawn = withdrawals.filter((w) => ["Completed", "Pending"].includes(w.fields.Status)).reduce((s, w) => s + (w.fields.Amount || 0), 0);
+  const totalWithdrawn = withdrawals.filter((w) => ["Completed", "Pending", "Paid"].includes(w.fields.Status)).reduce((s, w) => s + (w.fields.Amount || 0), 0);
   const balance = totalEarned - totalWithdrawn;
 
   const handleWithdraw = async () => {
@@ -505,7 +505,7 @@ const WalletTab = ({ orders, withdrawals, userEmail, creatorPaypal, creatorName,
                   <div style={{ textAlign: "right" }}>
                     <div style={{ fontSize: 15, fontWeight: 500, color: item.type === "in" ? "#2ED573" : "#FFF" }}>{item.type === "in" ? "+" : "−"}${item.amount}</div>
                     {item.type === "out" && item.status && (
-                      <span style={{ fontSize: 10, letterSpacing: "0.06em", color: item.status === "Completed" ? "#2ED573" : "#FBBF24" }}>{item.status === "Completed" ? "PAID" : "PROCESSING"}</span>
+                      <span style={{ fontSize: 10, letterSpacing: "0.06em", color: ["Completed","Paid"].includes(item.status) ? "#2ED573" : "#FBBF24" }}>{["Completed","Paid"].includes(item.status) ? "PAID" : "PROCESSING"}</span>
                     )}
                   </div>
                 </div>
