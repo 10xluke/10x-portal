@@ -15,7 +15,7 @@ export default async function handler(req, res) {
 
   try {
     await resend.emails.send({
-      from: 'BIG RECORDS <noreply@bigrecords.com>',
+      from: 'BIG Records Promo <noreply@bigrecords.com>',
       to: email,
       subject: `${code} is your login code`,
       html: `
