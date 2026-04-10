@@ -38,11 +38,12 @@ function generateOTP() {
 const font = "'Inter', -apple-system, sans-serif";
 
 const statusMap = {
-  Invited:   { color: "#FF9F43", label: "NEW" },
-  Accepted:  { color: "#54A0FF", label: "ACTIVE" },
-  Posted:    { color: "#A78BFA", label: "REVIEW" },
-  Completed: { color: "#2ED573", label: "DONE" },
-  Declined:  { color: "#FF6B6B", label: "PASS" },
+  Invited:           { color: "#54A0FF", label: "INVITED" },
+  Accepted:          { color: "#A78BFA", label: "ACCEPTED" },
+  Posted:            { color: "#FBBF24", label: "POSTED" },
+  Completed:         { color: "#2ED573", label: "COMPLETED" },
+  Declined:          { color: "#888888", label: "DECLINED" },
+  "Revision Needed": { color: "#FB923C", label: "REVISION" },
 };
 
 const StatusPill = ({ status }) => {
@@ -307,8 +308,13 @@ const CampaignSheet = ({ record, onUpdate, onClose }) => {
           </div>
         )}
 
-        {status === "Accepted" && !isExpired && (
+        {(status === "Accepted" || status === "Revision Needed") && !isExpired && (
           <div>
+            {status === "Revision Needed" && (
+              <div style={{ padding: "14px 16px", borderRadius: 16, background: "rgba(251,146,60,0.08)", border: "1px solid rgba(251,146,60,0.15)", marginBottom: 16 }}>
+                <span style={{ color: "#FB923C", fontSize: 13, fontWeight: 500 }}>Revision requested — please resubmit your video</span>
+              </div>
+            )}
             <div style={{ fontSize: 10, color: "rgba(255,255,255,0.3)", letterSpacing: "0.06em", fontWeight: 500, marginBottom: 10 }}>SUBMIT VIDEOS</div>
             {Array.from({ length: assignedPosts }, (_, i) => (
               <input key={i} type="url" placeholder={`Video Link #${i + 1}`} value={videoLinks[i] || ""}
