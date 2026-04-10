@@ -163,6 +163,7 @@
   .status-dot.posted { background: #FBBF24; }
   .status-dot.completed { background: #34D399; }
   .status-dot.declined { background: rgba(255,255,255,0.15); }
+  .status-dot.revision { background: #FB923C; }
   .status-label {
     font-size: 13px; font-weight: 300; color: rgba(255,255,255,0.7);
     min-width: 80px;
@@ -294,6 +295,11 @@
         <div class="status-dot posted"></div>
         <div class="status-label">Posted</div>
         <div class="status-desc">Video submitted — we're reviewing</div>
+      </div>
+      <div class="status-row">
+        <div class="status-dot revision"></div>
+        <div class="status-label">Revision Needed</div>
+        <div class="status-desc">We need changes — resubmit your video</div>
       </div>
       <div class="status-row">
         <div class="status-dot completed"></div>
