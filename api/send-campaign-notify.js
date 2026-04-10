@@ -16,9 +16,9 @@ export default async function handler(req, res) {
     const dl = deadline || "";
 
     const { data, error } = await resend.emails.send({
-      from: "BIG Records <noreply@bigrecords.com>",
+      from: "BIG Records Promo <noreply@bigrecords.com>",
       to: email,
-      subject: `[BIG Records] New campaign available`,
+      subject: `[BIG Records Promo] New campaign available`,
       html: `
 <!DOCTYPE html>
 <html>
@@ -33,7 +33,7 @@ export default async function handler(req, res) {
 
   <!-- Logo -->
   <tr><td style="padding-bottom:32px;">
-    <img src="https://app.bigrecords.com/images/email-logo.jpg" alt="BIG Records" style="display:block;height:72px;width:72px;" />
+    <img src="https://app.bigrecords.com/images/email-logo.jpg" alt="" style="display:block;height:72px;width:72px;" />
   </td></tr>
 
   <!-- Greeting -->
