@@ -13,9 +13,9 @@ export default async function handler(req, res) {
     const name = creatorName || "there";
 
     const { data, error } = await resend.emails.send({
-      from: "BIG Records <noreply@bigrecords.com>",
+      from: "BIG Records Promo <noreply@bigrecords.com>",
       to: email,
-      subject: "[BIG Records] You've been invited to our Creator Portal",
+      subject: "[BIG Records Promo] You've been invited to our Creator Portal",
       html: `
 <!DOCTYPE html>
 <html>
