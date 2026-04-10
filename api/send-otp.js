@@ -20,7 +20,7 @@ export default async function handler(req, res) {
       subject: `${code} is your login code`,
       html: `
         <div style="font-family: 'Helvetica Neue', Arial, sans-serif; max-width: 400px; margin: 0 auto; padding: 40px 0;">
-          <div style="font-size: 14px; font-weight: 600; color: #000; margin-bottom: 24px;">BIG RECORDS</div>
+         <img src="https://app.bigrecords.com/email-logo.jpg" alt="BIG Records" style="height: 40px; margin-bottom: 24px; display: block;" />
           <h1 style="font-size: 28px; font-weight: 500; color: #000; margin: 0 0 8px;">Your login code</h1>
           <p style="color: #999; font-size: 15px; margin: 0 0 32px;">Enter this code to sign in to your Creator Portal.</p>
           <div style="background: #F6F6F6; border-radius: 12px; padding: 20px; text-align: center; margin-bottom: 32px;">
