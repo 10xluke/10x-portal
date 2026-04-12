@@ -13,7 +13,7 @@ async function airtableFetch(path, opts = {}) {
   return res.json();
 }
 async function getCreatorByEmail(email) {
-  const data = await airtableFetch(`Creators?filterByFormula={Email}="${email.toLowerCase()}"&maxRecords=1`);
+  const data = await airtableFetch(`Creators?filterByFormula=LOWER({Email})="${email.toLowerCase()}"&maxRecords=1`);
   return data.records[0] || null;
 }
 async function getOrdersForCreator(email) {
@@ -207,7 +207,7 @@ const CampaignSheet = ({ record, onUpdate, onClose }) => {
     onClose();
   };
   const handleSubmit = async () => {
-    const links = videoLinks.filter((l) => l.trim());
+    const links = videoLinks.filter((l) => l.trim()).map(l => { const t = l.trim(); return t.match(/^https?:\/\//) ? t : `https://${t}`; });
     if (links.length < assignedPosts) { setMsg(`Enter all ${assignedPosts} video link(s).`); return; }
     setMsg(""); setSubmitting(true);
     await updateOrder(record.id, { Status: "Posted", "Video Links": links.join("\n") });
@@ -329,7 +329,7 @@ const CampaignSheet = ({ record, onUpdate, onClose }) => {
           <div>
             <div style={{ fontSize: 10, color: "rgba(255,255,255,0.3)", letterSpacing: "0.06em", fontWeight: 500, marginBottom: 10 }}>VIDEOS</div>
             {existingLinks.split("\n").filter(Boolean).map((link, i) => (
-              <a key={i} href={link} target="_blank" rel="noreferrer" style={{ display: "block", padding: "14px 16px", borderRadius: 14, background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.06)", marginBottom: 6, color: "#A78BFA", fontSize: 13, textDecoration: "none" }}>Video #{i + 1} ↗</a>
+              <a key={i} href={link.match(/^https?:\/\//)?link:`https://${link}`} target="_blank" rel="noreferrer" style={{ display: "block", padding: "14px 16px", borderRadius: 14, background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.06)", marginBottom: 6, color: "#A78BFA", fontSize: 13, textDecoration: "none" }}>Video #{i + 1} ↗</a>
             ))}
           </div>
         )}
