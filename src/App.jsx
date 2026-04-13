@@ -134,7 +134,7 @@ const CampaignCard = ({ record, onClick }) => {
   const s = statusMap[status] || statusMap.Invited;
   const campaign = Array.isArray(f["Campaign Name Lookup"]) ? f["Campaign Name Lookup"][0] : "—";
   const songName = Array.isArray(f["Song Name Lookup"]) ? f["Song Name Lookup"][0] : "";
-  const totalPrice = f["Total Price"] || 0;
+  const totalPrice = f["Locked Price"] || f["Total Price"] || 0;
   const soundCover = Array.isArray(f["Sound Cover Lookup"]) && f["Sound Cover Lookup"][0] ? f["Sound Cover Lookup"][0].url : "";
   const deadline = Array.isArray(f["Deadline Lookup"]) ? f["Deadline Lookup"][0] : "";
   const daysLeft = deadline ? Math.ceil((new Date(deadline) - new Date()) / 86400000) : null;
@@ -188,7 +188,7 @@ const CampaignSheet = ({ record, onUpdate, onClose }) => {
   const brief = Array.isArray(f["Brief Lookup"]) ? f["Brief Lookup"][0] : "";
   const deadline = Array.isArray(f["Deadline Lookup"]) ? f["Deadline Lookup"][0] : "";
   const assignedPosts = f["Assigned Posts"] || 1;
-  const totalPrice = f["Total Price"] || 0;
+  const totalPrice = f["Locked Price"] || f["Total Price"] || 0;
   const isExpired = deadline && new Date(deadline) < new Date() && !["Posted", "Completed"].includes(status);
   const daysLeft = deadline ? Math.ceil((new Date(deadline) - new Date()) / 86400000) : null;
   const existingLinks = f["Video Links"] || "";
@@ -303,7 +303,7 @@ const CampaignSheet = ({ record, onUpdate, onClose }) => {
 
         {status === "Invited" && !isExpired && (
           <div style={{ display: "flex", gap: 10 }}>
-            <button onClick={() => doUpdate({ Status: "Accepted" })} disabled={submitting} style={{ flex: 2, padding: "18px 0", borderRadius: 18, border: "none", background: "#FFF", color: "#000", fontSize: 15, fontWeight: 500, fontFamily: font, cursor: "pointer", opacity: submitting ? 0.5 : 1 }}>Accept</button>
+            <button onClick={() => doUpdate({ Status: "Accepted", "Locked Price": totalPrice })} disabled={submitting} style={{ flex: 2, padding: "18px 0", borderRadius: 18, border: "none", background: "#FFF", color: "#000", fontSize: 15, fontWeight: 500, fontFamily: font, cursor: "pointer", opacity: submitting ? 0.5 : 1 }}>Accept</button>
             <button onClick={() => doUpdate({ Status: "Declined" })} disabled={submitting} style={{ flex: 1, padding: "18px 0", borderRadius: 18, background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.08)", color: "rgba(255,255,255,0.5)", fontSize: 15, fontWeight: 500, fontFamily: font, cursor: "pointer", opacity: submitting ? 0.5 : 1 }}>Pass</button>
           </div>
         )}
@@ -425,7 +425,7 @@ const WalletTab = ({ orders, withdrawals, userEmail, creatorPaypal, creatorName,
   const [withdrawing, setWithdrawing] = useState(false);
   const [withdrawDone, setWithdrawDone] = useState(false);
 
-  const totalEarned = orders.filter((o) => o.fields.Status === "Completed").reduce((s, o) => s + (o.fields["Total Price"] || 0), 0);
+  const totalEarned = orders.filter((o) => o.fields.Status === "Completed").reduce((s, o) => s + (o.fields["Locked Price"] || o.fields["Total Price"] || 0), 0);
   const totalWithdrawn = withdrawals.filter((w) => ["Completed", "Pending", "Paid"].includes(w.fields.Status)).reduce((s, w) => s + (w.fields.Amount || 0), 0);
   const balance = totalEarned - totalWithdrawn;
 
@@ -445,7 +445,7 @@ const WalletTab = ({ orders, withdrawals, userEmail, creatorPaypal, creatorName,
 
   const ledger = [
     ...orders.filter(o => o.fields.Status === "Completed").map(o => ({
-      type: "in", amount: o.fields["Total Price"] || 0,
+      type: "in", amount: o.fields["Locked Price"] || o.fields["Total Price"] || 0,
       label: "Earned from " + (Array.isArray(o.fields["Campaign Name Lookup"]) ? o.fields["Campaign Name Lookup"][0] : "Campaign"),
       date: o.fields["Last Modified"] || "",
     })),
