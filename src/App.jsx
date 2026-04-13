@@ -17,12 +17,12 @@ async function getCreatorByEmail(email) {
   return data.records[0] || null;
 }
 async function getOrdersForCreator(email) {
-  const formula = encodeURIComponent(`FIND("${email.toLowerCase()}", ARRAYJOIN({Creator Email}))`);
+  const formula = encodeURIComponent(`FIND("${email.toLowerCase()}", LOWER(ARRAYJOIN({Creator Email})))`);
   const data = await airtableFetch(`Orders?filterByFormula=${formula}&sort[0][field]=DM+Sent+Date&sort[0][direction]=desc`);
   return data.records;
 }
 async function getWithdrawalsForCreator(email) {
-  const data = await airtableFetch(`Withdrawals?filterByFormula={Creator Email}="${email.toLowerCase()}"&sort[0][field]=Created+Date&sort[0][direction]=desc`);
+  const data = await airtableFetch(`Withdrawals?filterByFormula=LOWER({Creator Email})="${email.toLowerCase()}"&sort[0][field]=Created+Date&sort[0][direction]=desc`);
   return data.records;
 }
 async function updateOrder(recordId, fields) {
